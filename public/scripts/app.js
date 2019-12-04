@@ -26,5 +26,5 @@ var app=angular
   app.controller('HomeCtrl',[ '$scope', 'Page', function($scope, Page) {
     var pageTitle = 'Product Catalog - Home';
     Page.setTitle(pageTitle);
-    $scope.pageCount=100;
+    $scope.pageCount=200;
   }]);
