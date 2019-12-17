@@ -1,58 +1,32 @@
-<!doctype html>
-<html ng-app="ProdCatApp">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewpor" content="width=device-width initial-scale=1.0">
-  <title>{{Page.title()}}</title>
-
-  <link rel="stylesheet" type="text/css" href="libs/bootstrap/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="css/style.css">
-
-  <script type="text/javascript" src="libs/jquery-1.10.2.min.js"></script>
-  <script type="text/javascript" src="libs/angular.js"></script>
-  <!-- <script type="text/javascript" src="libs/moment.min.js"></script> -->
-  <script type="text/javascript" src="libs/angular-route.js"></script>
-  <script type="text/javascript" src="libs/angular-cookies.js"></script>
-  <script type="text/javascript" src="libs/bootstrap.min.js"></script>
-  <script type="text/javascript" src="libs/angular-resource.min.js"></script>
-  <script type="text/javascript" src="libs/angular-sanitize.js"></script>
-
-  <script type="text/javascript" src="scripts/App.js"></script>
-  <script type="text/javascript" src="scripts/Services/SharedModule.js"></script>
-
-</head>
-<body>
-
-<section class='container'>
-          <hgroup>
-            <h1>This is my awesome Angular JS application on OpenShift</h1>
-          </hgroup>
-
-       
-          <section class="col-xs-12 col-sm-6 col-md-6" ng-controller="HomeCtrl">
-
+<div style="padding: 50px">
+<section class="container">
+            <!-- <h1>This is my awesome Angular JS application on OpenShift</h1>
                 
+            <section class="col-xs-12 col-sm-6 col-md-6"></section>
                 <h2>Request information</h2>
                 <p>Page view count: {{pageCount}}
-                <!-- <% if (pageCountMessage) { %>
-                   <span class="code" id="count-value"><%=pageCountMessage%></span>
-                   </p>
-                    <div class="code"><h3>DB Connection Info:</h3>
-                      <table style='margin-left: 20px'>
-                          <tr><td>Type:</td><td><%= dbInfo.type %></td></tr>
-                          <tr><td>URL:</td><td><%= dbInfo.url %></td></tr>
-                      </table>
-                    </div>
-                <% } else { %>
-                   <span class="code" id="count-value">No database configured</span>
-                   </p>
-                <%} %> -->
-          </section>
+                
+            </section> -->
+    
+          
+    <p><input placeholder="Type to search..." type="text" ng-model="searchFor" size="30"></p>
+    <p>
+      There are {{ products.length }} products available to view:
+    </p>
+    <div class="panel panel-primary" ng-repeat="product in products | filter: { description: searchFor } | orderBy: 'price'">
+      <!-- Default panel contents-->
+      <div class="panel-heading">
+        <div style="float: right">{{ product.price }}</div>
+        {{ product.name }}
+      </div>
+      <div class="description">
+        {{ product.description }}
+      </div>
+    </div>
 
-        <footer>
-          <div class="logo"><a href="https://www.openshift.com/"></a></div>
-        </footer>
+
+    <footer>
+      <div class="logo"><a href="https://www.openshift.com/">Powered by OpenShift Container Platform</a></div>
+    </footer>
 </section>
-</body>
-</html>
+</div>

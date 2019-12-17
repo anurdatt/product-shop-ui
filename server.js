@@ -18,7 +18,7 @@ app.get('/', (req, res) => {
     console.log('In App GET /');
     //if (req.session.active == true) {
         //console.log ('session active');
-        res.sendFile('HomePage.html', {root: __dirname + '/public'});
+        res.sendFile('IndexMain.html', {root: __dirname + '/public'});
     // }
     // else {
     //     res.redirect('login.html');
