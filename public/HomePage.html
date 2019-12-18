@@ -13,7 +13,7 @@
     <p>
       There are {{ products.length }} products available to view:
     </p>
-    <div class="panel panel-primary" ng-repeat="product in products | filter: { description: searchFor } | orderBy: 'price'">
+    <div class="product panel panel-primary" ng-repeat="product in products | filter: { description: searchFor } | orderBy: 'price'">
       <!-- Default panel contents-->
       <div class="panel-heading">
         <div style="float: right">{{ product.price }}</div>
@@ -23,7 +23,8 @@
         {{ product.description }}
       </div>
     </div>
-
+    
+    <div style="clear: left"></div>
 
     <footer>
       <div class="logo"><a href="https://www.openshift.com/">Powered by OpenShift Container Platform</a></div>

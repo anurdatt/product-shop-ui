@@ -1,0 +1,21 @@
+input[type=text] {
+    padding: 3px;
+    border-radius: 4px;
+    border: 1px solid #bbb;
+}
+
+div.product {
+    float: left;
+    width: 300px;
+    margin-right: 10px;
+    min-height: 200px;
+}
+
+div.product div.description {
+    padding: 5px;
+}
+
+footer {
+    display: block;
+    margin: 50px 0 25px;
+}
