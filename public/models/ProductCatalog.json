@@ -1,0 +1,24 @@
+{
+    "productCatalogs": 
+    [  { "segmentName": "Apparel and Luggage and Personal Care Products", 
+        "familyName": "Clothing", 
+        "className": "Sweaters", 
+        "commodityName": "Boys sweaters" 
+    },
+    { "segmentName": "Apparel and Luggage and Personal Care Products", 
+        "familyName": "Clothing",
+        "className": "Sweaters", 
+        "commodityName": "Mens sweaters"
+    }, 
+    { "segmentName": "Apparel and Luggage and Personal Care Products", 
+        "familyName": "Clothing",
+        "className": "Sweaters", 
+        "commodityName": "Girls sweaters" 
+    },
+    { "segmentName": "Apparel and Luggage and Personal Care Products", 
+        "familyName": "Clothing",
+        "className": "Sweaters", 
+        "commodityName": "Womens sweaters" 
+    } ]
+
+}

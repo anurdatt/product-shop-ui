@@ -1,5 +1,5 @@
 <div style="padding: 50px">
-<section class="container">
+<section class="container-sm">
             <!-- <h1>This is my awesome Angular JS application on OpenShift</h1>
                 
             <section class="col-xs-12 col-sm-6 col-md-6"></section>
@@ -11,16 +11,16 @@
           
     <p><input placeholder="Type to search..." type="text" ng-model="searchFor" size="30"></p>
     <p>
-      There are {{ products.length }} products available to view:
+      There are {{ prodCats.length }} product categories available to view:
     </p>
-    <div class="product panel panel-primary" ng-repeat="product in products | filter: { description: searchFor } | orderBy: 'price'">
+    <div class="product-cat panel panel-primary" ng-repeat="prodCat in prodCats | filter: { commodityName: searchFor } | orderBy: 'commodityName'">
       <!-- Default panel contents-->
       <div class="panel-heading">
-        <div style="float: right">{{ product.price }}</div>
-        {{ product.name }}
+        <!-- <div style="float: right">{{ prodCat.className }}</div> -->
+        {{ prodCat.commodityName }}
       </div>
       <div class="description">
-        {{ product.description }}
+        {{ prodCat.segmentName }} -> {{ prodCat.familyName }} -> {{ prodCat.className }}
       </div>
     </div>
     
