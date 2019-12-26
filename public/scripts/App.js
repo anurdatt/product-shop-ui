@@ -10,12 +10,13 @@
  */
 var app=angular
   .module('ProdCatApp', [
-    // 'ngAnimate',
+    'ngAnimate',
     'ngCookies',
     'ngResource',
     'ngRoute',
     'ngSanitize',
     // 'ngTouch',
+    'angular.filter',
     'SharedModule'
   ]);
 

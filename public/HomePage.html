@@ -1,33 +1,178 @@
-<div style="padding: 50px">
-<section class="container-sm">
-            <!-- <h1>This is my awesome Angular JS application on OpenShift</h1>
-                
-            <section class="col-xs-12 col-sm-6 col-md-6"></section>
-                <h2>Request information</h2>
-                <p>Page view count: {{pageCount}}
-                
-            </section> -->
-    
-          
-    <p><input placeholder="Type to search..." type="text" ng-model="searchFor" size="30"></p>
-    <p>
-      There are {{ prodCats.length }} product categories available to view:
-    </p>
-    <div class="product-cat panel panel-primary" ng-repeat="prodCat in prodCats | filter: { commodityName: searchFor } | orderBy: 'commodityName'">
-      <!-- Default panel contents-->
-      <div class="panel-heading">
-        <!-- <div style="float: right">{{ prodCat.className }}</div> -->
-        {{ prodCat.commodityName }}
+<!-- <div style="padding: 50px"> -->
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="#">CloudStar - Product Shop</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Home
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">All Products</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Services</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Contact</a>
+            </li>
+          </ul>
+        </div>
       </div>
-      <div class="description">
-        {{ prodCat.segmentName }} -> {{ prodCat.familyName }} -> {{ prodCat.className }}
-      </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container">
+ 
+    <div class="row">
+
+        <div class="col-lg-12">
+
+            <div id="carouselExampleIndicators" class="carousel slide mt-4" data-ride="carousel">
+              <ol class="carousel-indicators">
+                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+              </ol>
+              <div class="carousel-inner" role="listbox">
+                <div class="carousel-item active">
+                  <!-- <img class="d-block img-fluid" src="http://placehold.it/1532x350" alt="First slide"> -->
+                  <img class="d-block img-fluid" src="images/slider/slider-11.jpg" alt="First slide">
+                </div>
+                <div class="carousel-item">
+                  <!-- <img class="d-block img-fluid" src="http://placehold.it/1532x350" alt="Second slide"> -->
+                  <img class="d-block img-fluid" src="images/slider/slider-22.jpg" alt="Second slide">
+                </div>
+                <div class="carousel-item">
+                  <!-- <img class="d-block img-fluid" src="http://placehold.it/1532x350" alt="Third slide"> -->
+                  <img class="d-block img-fluid" src="images/slider/slider-33.jpg" alt="Third slide">
+                </div>
+              </div>
+              <a class="carousel-control-prev" data-target="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="carousel-control-next" data-target="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
+            </div>
+        </div>
+
     </div>
-    
+    <!-- <div class="container"> -->
+    <div class="row">
+
+        <div class="col-lg-3">
+            <h4 class="my-4">Product Category</h1>
+            <div class="list-group">
+              <div class="list-group-item">
+                <!-- <div class="row"> -->
+                <p >Segment : </p>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle dropdown-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" 
+                    aria-haspopup="true" aria-expanded="false">
+                      All
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">All</a>
+                        <a class="dropdown-item" href="#">Segment 1</a>
+                        <a class="dropdown-item" href="#">Segment 2</a>
+                    </div>
+                </div>
+                <!-- </div> -->
+              </div>
+              <div class="list-group-item">
+                <p>Family : </p>
+                <div class="dropdown ">
+                    <button class="btn btn-secondary dropdown-toggle dropdown-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" 
+                    aria-haspopup="true" aria-expanded="false">
+                      All
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">All</a>
+                        <a class="dropdown-item" href="#">Family 1</a>
+                        <a class="dropdown-item" href="#">Family 2</a>
+                    </div>
+                </div>
+              </div>
+
+              <div class="list-group-item">
+                <p>Class : </p>
+                <div class="dropdown" >
+                    <button class="btn btn-secondary dropdown-toggle dropdown-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" 
+                    aria-haspopup="true" aria-expanded="false">
+                       All
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">All</a>
+                        <a class="dropdown-item" href="#">Class 1</a>
+                        <a class="dropdown-item" href="#">Class 2</a>
+                    </div>
+                </div>
+              </div>
+
+              <!-- <a href="#" class="list-group-item">Category 1 </a>
+              <a href="#" class="list-group-item">Category 2</a>
+              <a href="#" class="list-group-item">Category 3</a> -->
+            </div>
+        </div>
+        <div class="col-lg-9">
+          <p class="my-4"><input placeholder="Type to search..." type="text" ng-model="searchFor" size="30"></p>
+          <p>
+            There are {{ prodCats.length }} product categories available to view:
+          </p>
+          <!-- <div class="product-cat panel panel-primary" ng-repeat="prodCat in prodCats | filter: { commodityName: searchFor } | orderBy: 'commodityName'">
+            
+            <div class="panel-heading">
+              <div style="float: right">{{ prodCat.className }}</div>
+              {{ prodCat.commodityName }}
+            </div>
+            <img src="{{ prodCat.imageUrl }}" class="card-img-top" alt="Catalog image..">
+            <div class="description">
+              {{ prodCat.segmentName }} -> {{ prodCat.familyName }} -> {{ prodCat.className }}
+            </div>
+          </div> -->
+          
+          <div class="row row-cols-1 row-cols-md-3">
+            <div class="col mb-4" ng-repeat="prodCat in prodCats | filter: { commodityName: searchFor } | orderBy: 'commodityName'">
+              <!-- Default Card contents-->
+              <div class="card h-100">
+                <img src="{{ prodCat.imageUrl }}" class="card-img-top" alt="<<Catalog image>>">
+                <div class="card-body">
+                  <h5 class="card-title">{{ prodCat.commodityName }}</h5>
+                  <p class="card-text">{{ prodCat.segmentName }} -> {{ prodCat.familyName }} -> {{ prodCat.className }}</p>
+                </div>
+              </div>
+            </div>
+          
+          </div>
+        </div>
+
+    </div>
+
+<!-- 
     <div style="clear: left"></div>
 
     <footer>
       <div class="logo"><a href="https://www.openshift.com/">Powered by OpenShift Container Platform</a></div>
-    </footer>
-</section>
+    </footer> -->
+  </div>
+     <!-- /.container -->
+
+  <!-- Footer -->
+  <footer class="py-5 bg-dark mb-0">
+      <div class="container">
+         <p class="m-0 text-center text-white">Copyright &copy; CloudStar 2019</p>
+      </div>
+     <!-- /.container -->
+  </footer>
+    
 </div>
