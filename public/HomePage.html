@@ -1,33 +1,7 @@
-<!-- <div style="padding: 50px"> -->
 
-  <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-      <div class="container">
-        <a class="navbar-brand" href="#">CloudStar - Product Shop</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home
-                <span class="sr-only">(current)</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">All Products</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Services</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Contact</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-  </nav>
 
+  <!-- 
+<div> -->
   <!-- Page Content -->
   <div class="container">
  
@@ -68,53 +42,64 @@
 
     </div>
     <!-- <div class="container"> -->
-    <div class="row">
+    <div class="alert alert-info" ng-show="loading">"Please wait. Loading data..</div>
+    <div class="row mb-4" ng-hide="loading">
 
         <div class="col-lg-3">
-            <h4 class="my-4">Product Category</h1>
+            <h4 class="my-4">Product Category</h4>
             <div class="list-group">
               <div class="list-group-item">
                 <!-- <div class="row"> -->
                 <p >Segment : </p>
                 <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle dropdown-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" 
+                    <button class="btn btn-secondary dropdown-toggle dropdown-btn text-wrap" type="button" id="dropdownMenuButton" data-toggle="dropdown" 
                     aria-haspopup="true" aria-expanded="false">
-                      All
+                      {{ pc_selected_segment }}
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">All</a>
-                        <a class="dropdown-item" href="#">Segment 1</a>
-                        <a class="dropdown-item" href="#">Segment 2</a>
+                        <a class="dropdown-item active" href="javascript:void(0)" data-pc-type="{{ pc_type_segment }}">
+                          {{ pc_dd_all }} 
+                        </a>
+                        <a class="dropdown-item" href="javascript:void(0)" ng-repeat="(key, value) in prodCats | groupBy: 'segmentName'"
+                         data-pc-type="{{ pc_type_segment }}" data-value="{{ value }}">
+                          {{ key }}
+                        </a>
                     </div>
                 </div>
                 <!-- </div> -->
               </div>
               <div class="list-group-item">
                 <p>Family : </p>
-                <div class="dropdown ">
-                    <button class="btn btn-secondary dropdown-toggle dropdown-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" 
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle dropdown-btn text-wrap" type="button" id="dropdownMenuButton" data-toggle="dropdown" 
                     aria-haspopup="true" aria-expanded="false">
-                      All
+                      {{ pc_selected_family }}
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">All</a>
-                        <a class="dropdown-item" href="#">Family 1</a>
-                        <a class="dropdown-item" href="#">Family 2</a>
+                        <a class="dropdown-item active" href="javascript:void(0)" data-pc-type="{{ pc_type_family }}">
+                          {{ pc_dd_all }} </a>
+                        <a class="dropdown-item" href="javascript:void(0)" ng-repeat="(key, value) in prodCats | groupBy: 'familyName'"
+                         data-pc-type="{{ pc_type_family }}" data-value="{{ value }}">
+                          {{ key }}
+                        </a>
                     </div>
                 </div>
               </div>
 
               <div class="list-group-item">
                 <p>Class : </p>
-                <div class="dropdown" >
-                    <button class="btn btn-secondary dropdown-toggle dropdown-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" 
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle dropdown-btn text-wrap" type="button" id="dropdownMenuButton" data-toggle="dropdown" 
                     aria-haspopup="true" aria-expanded="false">
-                       All
+                      {{ pc_selected_class }}
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">All</a>
-                        <a class="dropdown-item" href="#">Class 1</a>
-                        <a class="dropdown-item" href="#">Class 2</a>
+                        <a class="dropdown-item active" href="javascript:void(0)" data-pc-type="{{ pc_type_class }}">
+                          {{ pc_dd_all }} </a>
+                        <a class="dropdown-item" href="javascript:void(0)" ng-repeat="(key, value) in prodCats | groupBy: 'className'"
+                         data-pc-type="{{ pc_type_class }}" data-value="{{ value }}">
+                          {{ key }}
+                        </a>
                     </div>
                 </div>
               </div>
@@ -127,7 +112,7 @@
         <div class="col-lg-9">
           <p class="my-4"><input placeholder="Type to search..." type="text" ng-model="searchFor" size="30"></p>
           <p>
-            There are {{ prodCats.length }} product categories available to view:
+            There are {{ prodCats ? prodCats.length : 0 }} product categories available to view:
           </p>
           <!-- <div class="product-cat panel panel-primary" ng-repeat="prodCat in prodCats | filter: { commodityName: searchFor } | orderBy: 'commodityName'">
             
@@ -147,7 +132,7 @@
               <div class="card h-100">
                 <img src="{{ prodCat.imageUrl }}" class="card-img-top" alt="<<Catalog image>>">
                 <div class="card-body">
-                  <h5 class="card-title">{{ prodCat.commodityName }}</h5>
+                  <a href="#/products/{{ prodCat.commodityId }}"><h5 class="card-title">{{ prodCat.commodityName }}</h5></a>  <small>{{ prodCat.commodityId }}</small>
                   <p class="card-text">{{ prodCat.segmentName }} -> {{ prodCat.familyName }} -> {{ prodCat.className }}</p>
                 </div>
               </div>
@@ -167,12 +152,5 @@
   </div>
      <!-- /.container -->
 
-  <!-- Footer -->
-  <footer class="py-5 bg-dark mb-0">
-      <div class="container">
-         <p class="m-0 text-center text-white">Copyright &copy; CloudStar 2019</p>
-      </div>
-     <!-- /.container -->
-  </footer>
     
-</div>
+<!-- </div> -->

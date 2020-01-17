@@ -18,4 +18,12 @@ SharedModule.factory('Page', function() {
         title: function() { return title;},
         setTitle: function(newTitle) { title=newTitle;}
     }
+})
+.factory('Navigation', function() {
+    var active='home';
+    return {
+        active: function() { return active;},
+        setActive: function(newNav) { active=newNav;}
+    }
+
 });

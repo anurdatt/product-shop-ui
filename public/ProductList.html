@@ -1,0 +1,75 @@
+<!-- <div> -->
+
+  
+  <!-- Page Content -->
+  <div class="container">
+
+      <div class="alert alert-info" ng-show="loading">"Please wait. Loading data..</div>
+      <div class="row mb-4" ng-hide="loading">
+
+        <div class="col-lg-3">
+            <h4 class="my-4">Product Filters</h4>
+            <div class="list-group">
+              <div class="list-group-item">
+                               <!-- </div> -->
+              </div>
+              <div class="list-group-item">
+                
+              </div>
+
+              <div class="list-group-item">
+                
+              </div>
+
+              <!-- <a href="#" class="list-group-item">Category 1 </a>
+              <a href="#" class="list-group-item">Category 2</a>
+              <a href="#" class="list-group-item">Category 3</a> -->
+            </div>
+        </div>
+        <div class="col-lg-9">
+          <p class="my-4"><input placeholder="Type to search..." type="text" ng-model="searchFor" size="30"></p>
+          <p>
+            There are {{ products ? products.length : 0 }} products available to view:
+          </p>
+          <!-- <div class="product-cat panel panel-primary" ng-repeat="prodCat in prodCats | filter: { commodityName: searchFor } | orderBy: 'commodityName'">
+            
+            <div class="panel-heading">
+              <div style="float: right">{{ prodCat.className }}</div>
+              {{ prodCat.commodityName }}
+            </div>
+            <img src="{{ prodCat.imageUrl }}" class="card-img-top" alt="Catalog image..">
+            <div class="description">
+              {{ prodCat.segmentName }} -> {{ prodCat.familyName }} -> {{ prodCat.className }}
+            </div>
+          </div> -->
+          
+          <div class="row row-cols-1 row-cols-md-3">
+            <div class="col mb-4" ng-repeat="product in products | filter: { itemName: searchFor } | orderBy: 'itemName'">
+              <!-- Default Card contents-->
+              <div class="card h-100">
+                <img src="{{ product.imageUrl }}" class="card-img-top" alt="<<Product image>>">
+                <div class="card-body">
+                  <h5 class="card-title">{{ product.itemName }}</h5>  <small>{{ product.itemId }}</small>
+                  <!-- <p class="card-text">{{ product.segmentName }} -> {{ product.familyName }} -> {{ product.className }}</p> -->
+                  <p class="card-text">{{ product.description }}</p>
+                </div>
+              </div>
+            </div>
+          
+          </div>
+        </div>
+
+    </div>
+
+<!-- 
+    <div style="clear: left"></div>
+
+    <footer>
+      <div class="logo"><a href="https://www.openshift.com/">Powered by OpenShift Container Platform</a></div>
+    </footer> -->
+  </div>
+     <!-- /.container -->
+
+
+    
+<!-- </div> -->
