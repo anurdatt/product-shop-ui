@@ -158,7 +158,7 @@ productRoutes.get('/ProductList', function(req, res) {
 
         async.forEachOf(resultJSON, function(elem, key, next) {
 
-            getObjectData(bucketP, `${elem.productId}.jpg`, function(error, data) {
+            getObjectData(bucketP, `${elem.itemId}.jpg`, function(error, data) {
                 if (error || data == null) {
                     elem['imageUrl'] = "http://placehold.it/253x182";        
                 }
@@ -204,7 +204,7 @@ productRoutes.get('/ProductList/:pcid', function(req, res) {
         }
         
         //console.log(response);
-        
+
         var resultJSON = {};
         try {
             resultJSON = JSON.parse(result);
@@ -219,7 +219,7 @@ productRoutes.get('/ProductList/:pcid', function(req, res) {
 
         async.forEachOf(resultJSON, function(elem, key, next) {
 
-            getObjectData(bucketP, `${elem.productId}.jpg`, function(error, data) {
+            getObjectData(bucketP, `${elem.itemId}.jpg`, function(error, data) {
                 if (error || data == null) {
                     elem['imageUrl'] = "http://placehold.it/253x182";        
                 }
