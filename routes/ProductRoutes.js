@@ -54,7 +54,13 @@ productRoutes.get('/ProductCatalog', function(req, res) {
         
         //console.log(result);
         
-        var resultJSON = JSON.parse(result);
+        var resultJSON = {};
+        try {
+            resultJSON = JSON.parse(result);
+        } catch(error) {
+            console.error(`ERROR: ${error.code} - ${error.message}\n`);
+            return;
+        } 
 
         if (resultJSON.error) {
             res.status(resultJSON.status).send(resultJSON.error);
@@ -137,7 +143,14 @@ productRoutes.get('/ProductList', function(req, res) {
         
         //console.log(response);
         
-        var resultJSON = JSON.parse(result);
+        var resultJSON = {};
+        try {
+            resultJSON = JSON.parse(result);
+        } catch(error) {
+            console.error(`ERROR: ${error.code} - ${error.message}\n`);
+            return;
+        }
+        
         if (resultJSON.error) {
             res.status(resultJSON.status).send(resultJSON.error);
             return;
@@ -192,7 +205,13 @@ productRoutes.get('/ProductList/:pcid', function(req, res) {
         
         //console.log(response);
         
-        var resultJSON = JSON.parse(result);
+        var resultJSON = {};
+        try {
+            resultJSON = JSON.parse(result);
+        } catch(error) {
+            console.error(`ERROR: ${error.code} - ${error.message}\n`);
+            return;
+        }
         if (resultJSON.error) {
             res.status(resultJSON.status).send(resultJSON.error);
             return;
