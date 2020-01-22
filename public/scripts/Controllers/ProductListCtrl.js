@@ -5,8 +5,8 @@ function ProductListCtrl($scope, $routeParams, Page, Navigation, ProductListProv
     Page.setTitle(pageTitle);
     $scope.loading=true;
 
-    var productCommodityId = $routeParams.pc;
-    if (productCommodityId == "all") {
+    $scope.productCommodityId = $routeParams.pc;
+    if ($scope.productCommodityId == "all") {
         
         Navigation.setActive('all-products');
 
@@ -22,7 +22,7 @@ function ProductListCtrl($scope, $routeParams, Page, Navigation, ProductListProv
         });
     }
     else {
-        ProductListProvider.getProductsByCommodityId(productCommodityId)
+        ProductListProvider.getProductsByCommodityId($scope.productCommodityId)
         .success(function(data) {
             //console.log("data : " + JSON.stringify(data));
             $scope.products=$scope.allProducts=data;
