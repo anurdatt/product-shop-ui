@@ -1,7 +1,8 @@
 var productRoutes = require('express').Router(),
     request = require('request'),
     myCos = require('ibm-cos-sdk'),
-    async = require('async');
+    async = require('async'),
+    fs = require('fs');
 
 var serviceUrl = process.env.PRODUCT_API_BE_SERVICE_URL || process.env.OPENSHIFT_PRODUCT_API_BE_SERVICE_URL 
                         || "http://product-api-sb-cloudstar.inmbzp8022.in.dst.ibm.com/api/v1/product";
@@ -102,16 +103,21 @@ productRoutes.get('/ProductCatalog', function(req, res) {
 
         async.forEachOf(resultJSON, function(elem, key, next) {
 
-            getObjectData(bucketPC, `${elem.commodityId}.jpg`, function(error, data) {
-                if (error || data == null) {
-                    elem['imageUrl'] = "http://placehold.it/253x182";        
-                }
-                else {
-                    elem['imageUrl'] = endpoint + '/' + bucketPC + '/' + elem.commodityId + '.jpg';
-                }
-                //console.log(JSON.stringify(elem));
-                next();
-            });
+            elem['imageUrl'] = endpoint + '/' + bucketPC + '/' + elem.commodityId + '.jpg';
+
+            //multiPartUpload(bucketPC, `${elem.commodityId}.jpg`, '253x182.png');
+
+            // getObjectData(bucketPC, `${elem.commodityId}.jpg`, function(error, data) {
+            //     if (error || data == null) {
+            //         elem['imageUrl'] = "http://placehold.it/253x182";        
+            //     }
+            //     else {
+            //         elem['imageUrl'] = endpoint + '/' + bucketPC + '/' + elem.commodityId + '.jpg';
+            //     }
+            //     //console.log(JSON.stringify(elem));
+            //     next();
+            // });
+            next();
         }, function(error) {
             res.status(response.statusCode).send(resultJSON);
         });
@@ -158,16 +164,19 @@ productRoutes.get('/ProductList', function(req, res) {
 
         async.forEachOf(resultJSON, function(elem, key, next) {
 
-            getObjectData(bucketP, `${elem.itemId}.jpg`, function(error, data) {
-                if (error || data == null) {
-                    elem['imageUrl'] = "http://placehold.it/253x182";        
-                }
-                else {
-                    elem['imageUrl'] = endpoint + '/' + bucketP + '/' + elem.productId + '.jpg';
-                }
-                //console.log(JSON.stringify(elem));
-                next();
-            });
+            elem['imageUrl'] = endpoint + '/' + bucketP + '/' + elem.itemId + '.jpg';
+            //multiPartUpload(bucketP, `${elem.itemId}.jpg`, '253x182.png');
+            // getObjectData(bucketP, `${elem.itemId}.jpg`, function(error, data) {
+            //     if (error || data == null) {
+            //         elem['imageUrl'] = "http://placehold.it/253x182";        
+            //     }
+            //     else {
+            //         elem['imageUrl'] = endpoint + '/' + bucketP + '/' + elem.itemId + '.jpg';
+            //     }
+            //     //console.log(JSON.stringify(elem));
+            //     next();
+            // });
+            next();
         }, function(error) {
             res.status(response.statusCode).send(resultJSON);
         });
@@ -219,16 +228,19 @@ productRoutes.get('/ProductList/:pcid', function(req, res) {
 
         async.forEachOf(resultJSON, function(elem, key, next) {
 
-            getObjectData(bucketP, `${elem.itemId}.jpg`, function(error, data) {
-                if (error || data == null) {
-                    elem['imageUrl'] = "http://placehold.it/253x182";        
-                }
-                else {
-                    elem['imageUrl'] = endpoint + '/' + bucketP + '/' + elem.productId + '.jpg';
-                }
-                //console.log(JSON.stringify(elem));
-                next();
-            });
+            elem['imageUrl'] = endpoint + '/' + bucketP + '/' + elem.itemId + '.jpg';
+            
+            // getObjectData(bucketP, `${elem.itemId}.jpg`, function(error, data) {
+            //     if (error || data == null) {
+            //         elem['imageUrl'] = "http://placehold.it/253x182";        
+            //     }
+            //     else {
+            //         elem['imageUrl'] = endpoint + '/' + bucketP + '/' + elem.itemId + '.jpg';
+            //     }
+            //     //console.log(JSON.stringify(elem));
+            //     next();
+            // });
+            next();
         }, function(error) {
             res.status(response.statusCode).send(resultJSON);
         });
@@ -263,6 +275,86 @@ async function asyncGetObjectData(bucket, itemKey) {
         Bucket: bucket, 
         Key: itemKey
     }).promise();
+}
+
+function multiPartUpload(bucketName, itemName, filePath) {
+    var uploadID = null;
+
+    if (!fs.existsSync(filePath)) {
+        log.error(new Error(`The file \'${filePath}\' does not exist or is not accessible.`));
+        return;
+    }
+
+    console.log(`Starting multi-part upload for ${itemName} to bucket: ${bucketName}`);
+    return cosClient.createMultipartUpload({
+        Bucket: bucketName,
+        Key: itemName
+    }).promise()
+    .then((data) => {
+        uploadID = data.UploadId;
+
+        //begin the file upload        
+        fs.readFile(filePath, (e, fileData) => {
+            //min 5MB part
+            var partSize = 1024 * 1024 * 5;
+            var partCount = Math.ceil(fileData.length / partSize);
+
+            async.timesSeries(partCount, (partNum, next) => {
+                var start = partNum * partSize;
+                var end = Math.min(start + partSize, fileData.length);
+
+                partNum++;
+
+                console.log(`Uploading to ${itemName} (part ${partNum} of ${partCount})`);  
+
+                cosClient.uploadPart({
+                    Body: fileData.slice(start, end),
+                    Bucket: bucketName,
+                    Key: itemName,
+                    PartNumber: partNum,
+                    UploadId: uploadID
+                }).promise()
+                .then((data) => {
+                    next(e, {ETag: data.ETag, PartNumber: partNum});
+                })
+                .catch((e) => {
+                    cancelMultiPartUpload(bucketName, itemName, uploadID);
+                    console.error(`ERROR: ${e.code} - ${e.message}\n`);
+                });
+            }, (e, dataPacks) => {
+                cosClient.completeMultipartUpload({
+                    Bucket: bucketName,
+                    Key: itemName,
+                    MultipartUpload: {
+                        Parts: dataPacks
+                    },
+                    UploadId: uploadID
+                }).promise()
+                .then(console.log(`Upload of all ${partCount} parts of ${itemName} successful.`))
+                .catch((e) => {
+                    cancelMultiPartUpload(bucketName, itemName, uploadID);
+                    console.error(`ERROR: ${e.code} - ${e.message}\n`);
+                });
+            });
+        });
+    })
+    .catch((e) => {
+        console.error(`ERROR: ${e.code} - ${e.message}\n`);
+    });
+}
+
+function cancelMultiPartUpload(bucketName, itemName, uploadID) {
+    return cosClient.abortMultipartUpload({
+        Bucket: bucketName,
+        Key: itemName,
+        UploadId: uploadID
+    }).promise()
+    .then(() => {
+        console.log(`Multi-part upload aborted for ${itemName}`);
+    })
+    .catch((e)=>{
+        console.error(`ERROR: ${e.code} - ${e.message}\n`);
+    });
 }
 
 module.exports = productRoutes;
