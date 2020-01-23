@@ -37,6 +37,6 @@ var app=angular
   
 
   app.controller('Ctrl404',[ 'Page', function(Page) {
-    var pageTitle = 'Product Catalog - Error';
+    var pageTitle = 'Product Shop - Error';
     Page.setTitle(pageTitle);
   }]);
