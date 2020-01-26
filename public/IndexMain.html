@@ -17,13 +17,19 @@
 <body>
     
   <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" style="background-color: darkblue;">
+    <nav ng-controller=navCtrl class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" style="background-color: darkblue;">
         <div class="container">
           <a class="navbar-brand" href="#">CloudStar - Kool Product Shop</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarResponsive">
+            <form class="form-inline my-2 my-lg-0" ng-submit="search(searchTerm)">
+              <input class="form-control mr-sm-2" type="search" 
+                ng-model="searchTerm" placeholder="Search for products, categories and more" 
+                style="min-width: 350px; border-radius: 0.2rem;" aria-label="Search">
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
             <ul class="navbar-nav ml-auto">
               <li class="nav-item {{Navigation.active() == 'home' ? 'active' : ''}}">
                 <a class="nav-link" href="#">Home
@@ -34,7 +40,7 @@
                 <a class="nav-link" href="#/products/all">All Products</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Search</a>
+                <a class="nav-link" href="" ng-click="openImageSearch()">Search By Image</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">Cart</a>
@@ -42,14 +48,32 @@
             </ul>
           </div>
         </div>
+
+        <div id="myOverlay" class="overlay">
+          <span class="closebtn"  ng-click="closeImageSearch()" title="Close Overlay">x</span>
+          <div class="overlay-content">
+            <form action="action_page.php">
+              <!-- <input type="text" placeholder="Search.." name="search"> -->
+              <div class="form-group" >
+                <label for="exampleInputFile">File input</label>
+                <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
+                <small id="fileHelp" style="float: left;" class="form-text text-muted">Browse and select the image file matching which you want to search products.</small>
+              <!-- </div> -->
+              <!-- <div class="form-group" > -->
+              <button type="submit" style="float:right;"><i class="fa fa-search">Submit</i></button>
+              </div>
+            </form>
+          </div>
+        </div>
     </nav>
+    
   <!--Body of the page/view-->
   <div ng-view="">
   </div>
   <!-- Footer -->
   <footer class="py-5 bg-dark mb-0">
         <div class="container">
-           <p class="m-0 text-center text-white">Copyright &copy; CloudStar 2019</p>
+           <p class="m-0 text-center text-white">Copyright &copy; CloudStar 2020</p>
         </div>
        <!-- /.container -->
   </footer>

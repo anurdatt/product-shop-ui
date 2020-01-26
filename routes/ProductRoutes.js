@@ -251,6 +251,69 @@ productRoutes.get('/ProductList/:pcid', function(req, res) {
 
 });
 
+
+productRoutes.post('/SearchProductsByText', function(req, res) {
+    
+    let url = serviceUrl + '/SearchProductsByText';;
+    console.log('url = ' + url);
+
+    data = req.body;
+
+    console.log('post data = ' + JSON.stringify(data));
+    let queryOption = {
+        url: url,
+        headers: { 'Content-Type': 'application/json' },
+        method: 'POST',
+        body: JSON.stringify(data)
+    }
+
+    request(queryOption, function(error, response, result) {
+        if (error) {
+            console.error(error);
+            res.status(500).send(error);
+            return;
+        }
+        
+        //console.log(response);
+
+        var resultJSON = {};
+        try {
+            resultJSON = JSON.parse(result);
+        } catch(error) {
+            console.error(`ERROR: ${error.code} - ${error.message}\n`);
+            return;
+        }
+        if (resultJSON.error) {
+            res.status(resultJSON.status).send(resultJSON.error);
+            return;
+        }
+
+        async.forEachOf(resultJSON, function(elem, key, next) {
+
+            elem['imageUrl'] = endpoint + '/' + bucketP + '/' + elem.itemId + '.jpg';
+            
+            // getObjectData(bucketP, `${elem.itemId}.jpg`, function(error, data) {
+            //     if (error || data == null) {
+            //         elem['imageUrl'] = "http://placehold.it/253x182";        
+            //     }
+            //     else {
+            //         elem['imageUrl'] = endpoint + '/' + bucketP + '/' + elem.itemId + '.jpg';
+            //     }
+            //     //console.log(JSON.stringify(elem));
+            //     next();
+            // });
+            next();
+        }, function(error) {
+            res.status(response.statusCode).send(resultJSON);
+        });
+
+        // res.status(response.statusCode).send(resultJSON);
+        
+    });
+
+});
+
+
 function getObjectData(bucket, itemKey, cb) {
     console.log(`Retrieving item from bucket: ${bucket}, key: ${itemKey}`);
     return cosClient.getObject({

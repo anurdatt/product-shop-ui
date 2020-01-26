@@ -20,6 +20,16 @@
             
         };
 
+        this.searchProductsByText = function (st) {
+            var data = { searchText: st };
+            return $http({
+                method: "POST",
+                url: "/api/product/SearchProductsByText",
+                //url: "models/ProductList.json"
+                data: data
+            });
+        }
+
     }
 
     app.service('ProductListProvider', ProductListProvider);

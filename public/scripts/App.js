@@ -29,12 +29,33 @@ var app=angular
     $routeProvider
         .when('/home', { controller: "HomeCtrl", templateUrl: "HomePage.html" })
         .when('/products/:pc', { controller: "ProductListCtrl", templateUrl: "ProductList.html" })
+        //.when('/products/:pc/:st', { controller: "ProductListCtrl", templateUrl: "ProductList.html" })
         .when('/', { redirectTo: "/home" })
         .when('/404_page', { controller: "Ctrl404", templateUrl: "404Page.html" })
         .otherwise({redirectTo: "/404_page" });
   }]);
 
   
+  app.controller('navCtrl',[ '$scope', '$location', function($scope, $location) {
+    // $scope.search = function(searchTerm) {
+    //   $location.path('/products/search/' + searchTerm);
+    // }
+    $scope.search = function(searchTerm) {
+      $location.path('/products/search').search('st', searchTerm);
+    }
+
+
+    // Open the full screen image search box 
+    $scope.openImageSearch = function() {
+      document.getElementById("myOverlay").style.display = "block";
+    }
+
+    // Close the full screen image search box 
+    $scope.closeImageSearch = function() {
+      document.getElementById("myOverlay").style.display = "none";
+    } 
+
+  }]);
 
   app.controller('Ctrl404',[ 'Page', function(Page) {
     var pageTitle = 'Product Shop - Error';

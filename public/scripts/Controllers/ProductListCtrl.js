@@ -6,6 +6,8 @@ function ProductListCtrl($scope, $routeParams, Page, Navigation, ProductListProv
     $scope.loading=true;
 
     $scope.productCommodityId = $routeParams.pc;
+    var sterm = $routeParams.st;
+    
     if ($scope.productCommodityId == "all") {
         
         Navigation.setActive('all-products');
@@ -13,6 +15,19 @@ function ProductListCtrl($scope, $routeParams, Page, Navigation, ProductListProv
         ProductListProvider.getAllProducts()
         .success(function(data) {
             //console.log("data : " + JSON.stringify(data));
+            $scope.products=$scope.allProducts=data;
+            $scope.loading=false;
+        } )
+        .error( function(error) {
+            alert("There was an error fetching data, please try again!");
+            console.error("Error: " + JSON.stringify(error));
+        });
+    }
+    else if ($scope.productCommodityId == "search") {
+        console.log("Search term = " + sterm);
+        ProductListProvider.searchProductsByText(sterm)
+        .success(function(data) {
+            console.log("data : " + JSON.stringify(data));
             $scope.products=$scope.allProducts=data;
             $scope.loading=false;
         } )
