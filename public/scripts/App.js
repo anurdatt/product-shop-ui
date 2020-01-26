@@ -28,8 +28,8 @@ var app=angular
   app.config(['$routeProvider', function($routeProvider) {
     $routeProvider
         .when('/home', { controller: "HomeCtrl", templateUrl: "HomePage.html" })
-        .when('/products/:pc', { controller: "ProductListCtrl", templateUrl: "ProductList.html" })
-        //.when('/products/:pc/:st', { controller: "ProductListCtrl", templateUrl: "ProductList.html" })
+        .when('/products/list/:type', { controller: "ProductListCtrl", templateUrl: "ProductList.html" })
+        //.when('/products/list/:type/:st', { controller: "ProductListCtrl", templateUrl: "ProductList.html" })
         .when('/', { redirectTo: "/home" })
         .when('/404_page', { controller: "Ctrl404", templateUrl: "404Page.html" })
         .otherwise({redirectTo: "/404_page" });
@@ -41,7 +41,7 @@ var app=angular
     //   $location.path('/products/search/' + searchTerm);
     // }
     $scope.search = function(searchTerm) {
-      $location.path('/products/search').search('st', searchTerm);
+      $location.path('/products/list/search').search('st', searchTerm);
     }
 
 

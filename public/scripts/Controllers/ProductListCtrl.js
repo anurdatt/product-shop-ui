@@ -5,10 +5,10 @@ function ProductListCtrl($scope, $routeParams, Page, Navigation, ProductListProv
     Page.setTitle(pageTitle);
     $scope.loading=true;
 
-    $scope.productCommodityId = $routeParams.pc;
+    $scope.listType = $routeParams.type
     var sterm = $routeParams.st;
     
-    if ($scope.productCommodityId == "all") {
+    if ($scope.listType == "all") {
         
         Navigation.setActive('all-products');
 
@@ -23,9 +23,11 @@ function ProductListCtrl($scope, $routeParams, Page, Navigation, ProductListProv
             console.error("Error: " + JSON.stringify(error));
         });
     }
-    else if ($scope.productCommodityId == "search") {
-        console.log("Search term = " + sterm);
-        ProductListProvider.searchProductsByText(sterm)
+    else if ($scope.listType == "search") {
+        $scope.commodityName = "Search"  //hack to set the section header proper
+        $scope.sterm = $routeParams.st;
+        console.log("Search term = " + $scope.sterm);
+        ProductListProvider.searchProductsByText($scope.sterm)
         .success(function(data) {
             console.log("data : " + JSON.stringify(data));
             $scope.products=$scope.allProducts=data;
@@ -35,9 +37,12 @@ function ProductListCtrl($scope, $routeParams, Page, Navigation, ProductListProv
             alert("There was an error fetching data, please try again!");
             console.error("Error: " + JSON.stringify(error));
         });
+        
     }
-    else {
-        ProductListProvider.getProductsByCommodityId($scope.productCommodityId)
+    else if ($scope.listType == "category") {
+        $scope.commodityId = $routeParams.commodityId;
+        $scope.commodityName = $routeParams.commodityName;
+        ProductListProvider.getProductsByCommodityId($scope.commodityId)
         .success(function(data) {
             //console.log("data : " + JSON.stringify(data));
             $scope.products=$scope.allProducts=data;

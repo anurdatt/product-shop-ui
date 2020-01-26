@@ -132,7 +132,10 @@
               <div class="card h-100">
                 <img src="{{ prodCat.imageUrl }}" class="card-img-top" alt="<<Catalog image>>">
                 <div class="card-body">
-                  <a href="#/products/{{ prodCat.commodityId }}"><h5 class="card-title">{{ prodCat.commodityName }}</h5></a>  <small>{{ prodCat.commodityId }}</small>
+                  <a href="#/products/list/category?commodityId={{ prodCat.commodityId }}&commodityName={{ prodCat.commodityName }}">
+                    <h5 class="card-title">{{ prodCat.commodityName }}</h5>
+                  </a>  
+                    <small>{{ prodCat.commodityId }}</small>
                   <p class="card-text">{{ prodCat.segmentName }} -> {{ prodCat.familyName }} -> {{ prodCat.className }}</p>
                 </div>
               </div>
