@@ -39,7 +39,7 @@
               <li class="nav-item {{Navigation.active() == 'all-products' ? 'active' : ''}}" >
                 <a class="nav-link" href="#/products/list/all">All Products</a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item {{Navigation.active() == 'search-by-image' ? 'active' : ''}}">
                 <a class="nav-link" href="" ng-click="openImageSearch()">Search By Image</a>
               </li>
               <li class="nav-item">
@@ -52,15 +52,15 @@
         <div id="myOverlay" class="overlay">
           <span class="closebtn"  ng-click="closeImageSearch()" title="Close Overlay">x</span>
           <div class="overlay-content">
-            <form action="action_page.php">
+            <form ng-submit="uploadFile()">
               <!-- <input type="text" placeholder="Search.." name="search"> -->
-              <div class="form-group" >
+              <div class="form-group">
                 <label for="exampleInputFile">File input</label>
-                <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
-                <small id="fileHelp" style="float: left;" class="form-text text-muted">Browse and select the image file matching which you want to search products.</small>
+                <input type="file" file-model="myFile" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
+                <small id="fileHelp" class="form-text text-muted" style="float: left; color: #FFBABA" >Browse and select the image file matching which you want to search products.</small>
               <!-- </div> -->
               <!-- <div class="form-group" > -->
-              <button type="submit" style="float:right;"><i class="fa fa-search">Submit</i></button>
+              <button type="submit" style="float:right;" class="fa fa-search">Submit</button>
               </div>
             </form>
           </div>
@@ -101,7 +101,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-filter/0.5.17/angular-filter.min.js"></script>
 
   <script type="text/javascript" src="scripts/App.js"></script>
+  <script type="text/javascript" src="scripts/Directives/File-model-directive.js"></script>
   <script type="text/javascript" src="scripts/Services/SharedModule.js"></script>
+  <script type="text/javascript" src="scripts/Services/FileUpload.js"></script>
   <script type="text/javascript" src="scripts/Services/ProductCatalogProvider.js"></script>
   <script type="text/javascript" src="scripts/Services/ProductListProvider.js"></script>
   <script type="text/javascript" src="scripts/Controllers/HomeCtrl.js"></script>

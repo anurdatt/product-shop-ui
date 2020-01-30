@@ -1,6 +1,6 @@
 (function() {
 function HomeCtrl($scope, Page, Navigation, ProductCatalogProvider) {
-    var pageTitle = 'Product Catalog - Home';
+    var pageTitle = ' - Home';
     $scope.pc_dd_all="All";
     $scope.pc_selected_segment=$scope.pc_dd_all;
     $scope.pc_selected_family=$scope.pc_dd_all;

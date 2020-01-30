@@ -1,6 +1,6 @@
 (function() {
-function ProductListCtrl($scope, $routeParams, Page, Navigation, ProductListProvider) {
-    var pageTitle = 'Product List';
+function ProductListCtrl($scope, $routeParams, Page, Navigation, FileArray, ProductListProvider) {
+    var pageTitle = '- Product List';
     
     Page.setTitle(pageTitle);
     $scope.loading=true;
@@ -53,7 +53,26 @@ function ProductListCtrl($scope, $routeParams, Page, Navigation, ProductListProv
             console.error("Error: " + JSON.stringify(error));
         });
     }
-    
+    else if ($scope.listType == "searchByImage") {
+        Navigation.setActive('search-by-image');
+        $scope.commodityName = "Search By Image"  //hack to set the section header proper
+        var farr = FileArray.get();
+        if (farr.length > 0) {
+            var searchImageFile = farr[0];
+            ProductListProvider.searchProductsByImage(searchImageFile, function(data) {
+                console.log("data : " + JSON.stringify(data));
+                $scope.products=$scope.allProducts=data;
+                $scope.loading=false;
+                FileArray.clear(); 
+            }, function(error) {
+                alert("There was an error fetching data, please try again!");
+                console.error("Error: " + JSON.stringify(error));
+            });
+        }
+        else {
+            alert("Search by image called without an image file in the array");
+        }
+    }
 
     
     

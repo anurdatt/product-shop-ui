@@ -2,7 +2,10 @@ var productRoutes = require('express').Router(),
     request = require('request'),
     myCos = require('ibm-cos-sdk'),
     async = require('async'),
-    fs = require('fs');
+    fs = require('fs'),
+    multer = require('multer'),
+    jimp = require('jimp'),
+    pm = require('pixelmatch');
 
 var serviceUrl = process.env.PRODUCT_API_BE_SERVICE_URL || process.env.OPENSHIFT_PRODUCT_API_BE_SERVICE_URL 
                         || "http://product-api-sb-cloudstar.inmbzp8022.in.dst.ibm.com/api/v1/product";
@@ -34,6 +37,20 @@ var config = {
 }
 
 var cosClient=new myCos.S3(config);
+
+// var storage = multer.diskStorage( {
+//     destination: function(req, file, cb) {
+//         cb(null, './uploads');
+//     },
+//     filename: function(req, file, cb) {
+//         cb(null, file.fieldname + '-' + Date.now());
+//     }
+// });
+
+var storage = multer.memoryStorage();
+
+var upload = multer({storage: storage}).single("file");
+
 
 productRoutes.get('/ProductCatalog', function(req, res) {
     
@@ -314,6 +331,85 @@ productRoutes.post('/SearchProductsByText', function(req, res) {
 });
 
 
+
+productRoutes.post('/SearchProductsByImage', function(req, res) {
+    console.log('SearchProductsByImage request received..');
+    
+    upload(req, res, function(error) {
+        if(error) {
+            return res.status(500).end('Error uploading file - ' + error);
+        }
+        //console.log('req.file = ' + JSON.stringify(req.file));
+        console.log(req.file.buffer);
+        var searchImg = req.file.buffer;
+        
+        let url = serviceUrl + '/Products';
+
+        console.log('url = ' + url);
+
+        let queryOption = {
+            url: url,
+            //headers: { 'Content-Type': 'application/json' },
+            method: 'GET'
+        }
+
+        request(queryOption, function(error, response, result) {
+            if (error) {
+                console.error(error);
+                res.status(500).send(error);
+                return;
+            }
+            
+            //console.log(response);
+            
+            var resultJSON = {};
+            try {
+                resultJSON = JSON.parse(result);
+            } catch(error) {
+                console.error(`ERROR: ${error.code} - ${error.message}\n`);
+                return;
+            }
+            
+            if (resultJSON.error) {
+                res.status(resultJSON.status).send(resultJSON.error);
+                return;
+            }
+
+            var finalResultJSON = [];
+            async.forEachOf(resultJSON, function(elem, key, next) {
+
+                // elem['imageUrl'] = endpoint + '/' + bucketP + '/' + elem.itemId + '.jpg';
+                
+                getObjectData(bucketP, `${elem.itemId}.jpg`, function(error, data) {
+                    if (error || data == null) {
+                        //throw error if reqd.
+                        console.error('Error getting Object with Id ' + elem.itemId + ' from COS');
+                    }
+                    else {
+                        console.log('Got Object with Id ' + elem.itemId + ' from COS');
+                        elem['imageUrl'] = endpoint + '/' + bucketP + '/' + elem.itemId + '.jpg';
+                        
+                        const match = matchImageData(searchImg, Buffer.from(data.Body)); //returns true/false
+                        if (match) {
+                            finalResultJSON.push(elem);
+                        }
+                    }
+                    //console.log(JSON.stringify(elem));
+                    next();
+                });
+                //next();
+            }, function(error) {
+                res.status(response.statusCode).send(finalResultJSON);
+            });
+
+            // res.status(response.statusCode).send(resultJSON);
+            
+        });
+    });
+});
+
+
+
 function getObjectData(bucket, itemKey, cb) {
     console.log(`Retrieving item from bucket: ${bucket}, key: ${itemKey}`);
     return cosClient.getObject({
@@ -338,6 +434,44 @@ async function asyncGetObjectData(bucket, itemKey) {
         Bucket: bucket, 
         Key: itemKey
     }).promise();
+}
+
+function matchImageData(searchBuffer, itemBuffer) {
+    //TODO
+    console.log(searchBuffer);
+    console.log('searchBuffer.length = ' + searchBuffer.length);
+    console.log(itemBuffer);
+    console.log('itemBuffer.length = ' + itemBuffer.length);
+    return true;
+    /* async.waterfall([
+        function(next) {
+            jimp.read(searchBuffer)
+            .then( simage => {
+                simage.resize(253, 182);
+                //console.log('resized search image Object fields = ' + JSON.stringify(Object.keys(simage)));
+                console.log('resized search image data length = ' + simage.getBuffer().length);
+                next(null, simage);
+            })
+        },
+        function(res1, next) {
+            jimp.read(itemImage)
+            .then( iimage => {
+                iimage.resize(253, 182);
+                console.log('resized item image data length = ' + iimage.getBuffer().length);
+                next(null, res1, iimage);
+            })
+        },
+        function(res1, res2, next) {
+            pm.pixel
+        }
+
+    ], function(err, result) {
+
+    }); */
+
+    
+
+    
 }
 
 function multiPartUpload(bucketName, itemName, filePath) {

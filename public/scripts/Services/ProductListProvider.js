@@ -30,6 +30,24 @@
             });
         }
 
+        this.searchProductsByImage = function (file, successCB, errorCB) {
+            var fd = new FormData();
+            fd.append('file', file);
+            var uploadUrl = "/api/product/SearchProductsByImage";
+            $http.post(uploadUrl, fd, {
+                transformRequest: angular.identity,
+                headers: {'Content-Type': undefined}
+            })
+            .success(function(data) {
+                console.log('File uploaded and search completed successfully');
+                successCB(data);
+            })
+            .error(function(error) {
+                console.error('Error in uploading file or search - ' + error);
+                errorCB(error);
+            });
+        };
+
     }
 
     app.service('ProductListProvider', ProductListProvider);

@@ -36,7 +36,7 @@ var app=angular
   }]);
 
   
-  app.controller('navCtrl',[ '$scope', '$location', function($scope, $location) {
+  app.controller('navCtrl',[ '$scope', '$location', 'FileArray', function($scope, $location, FileArray, FileUpload) {
     // $scope.search = function(searchTerm) {
     //   $location.path('/products/search/' + searchTerm);
     // }
@@ -48,12 +48,31 @@ var app=angular
     // Open the full screen image search box 
     $scope.openImageSearch = function() {
       document.getElementById("myOverlay").style.display = "block";
+      $location.path('/home');
     }
 
     // Close the full screen image search box 
     $scope.closeImageSearch = function() {
       document.getElementById("myOverlay").style.display = "none";
     } 
+
+    $scope.uploadFile = function() {
+      var file = $scope.myFile;
+      console.log('file is ')
+      console.dir(file);
+      console.log('file object is ' + JSON.stringify(file));
+      
+      // var uploadUrl = "/fileUpload";
+      // FileUpload.uploadFileToUrl(file, uploadUrl, function() {
+        $scope.closeImageSearch();    
+      // }, function(error) {
+      //   alert(error);
+      // });
+
+      FileArray.put(file);
+      $location.path('/products/list/searchByImage');
+    
+    }
 
   }]);
 
