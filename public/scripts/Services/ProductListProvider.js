@@ -14,7 +14,34 @@
         this.getProductsByCommodityId = function (pcId) {
             return $http({
                 method: "GET",
-                url: `/api/product/ProductList/${pcId}` 
+                url: `/api/product/ProductList/commodity/${pcId}` 
+                //url: "models/ProductList.json"
+            });
+            
+        };
+
+        this.getProductsByClassId = function (pcId) {
+            return $http({
+                method: "GET",
+                url: `/api/product/ProductList/class/${pcId}` 
+                //url: "models/ProductList.json"
+            });
+            
+        };
+
+        this.getProductsByFamilyId = function (pcId) {
+            return $http({
+                method: "GET",
+                url: `/api/product/ProductList/family/${pcId}` 
+                //url: "models/ProductList.json"
+            });
+            
+        };
+
+        this.getProductsBySegmentId = function (pcId) {
+            return $http({
+                method: "GET",
+                url: `/api/product/ProductList/segment/${pcId}` 
                 //url: "models/ProductList.json"
             });
             

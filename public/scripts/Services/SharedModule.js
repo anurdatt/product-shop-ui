@@ -28,11 +28,12 @@ SharedModule.factory('Page', function() {
     }
 
 })
-.factory('FileArray', function() {
+.factory('ObjectArray', function() {
     var arr = [];
     return {
-        get: function() { return arr;},
-        put: function(newFile) { arr.push(newFile); },
+        get: function() { return arr; },
+        //set: function(newArray) { arr = newArray; },
+        put: function(newObject) { arr.push(newObject); },
         clear: function() { arr = []; }
     }
 });

@@ -6,14 +6,14 @@
         <div class="row">
           <div class="col-md-12">
             <div class="content">
-              <h1 class="page-name">Product List</h1>
+              <h1 class="page-name">Product View</h1>
               <ol class="breadcrumb">
-                <li><a href="#">Home&nbsp;</a></li>
-                <li ng-if="familyName"><a href="#/products/list/category?segmentId={{ segmentId }}&segmentName={{ segmentName }}">{{ segmentName }}&nbsp;</a></li>
-                <li ng-if="className"><a href="#/products/list/category?familyId={{ familyId }}&familyName={{ familyName }}">{{ familyName }}&nbsp;</a></li>
-                <li ng-if="commodityName"><a href="#/products/list/category?classId={{ classId }}&className={{ className }}">{{ className }}&nbsp;</a></li>
-                
-                <li class="active">{{ activeName }}</li>
+                <li><a href="#/home">Home&nbsp;</a></li>
+                <li><a href="#/products/list/category?segmentId={{ segmentId }}&segmentName={{ segmentName }}">{{ segmentName }}&nbsp;</a></li>
+                <li><a href="#/products/list/category?familyId={{ familyId }}&familyName={{ familyName }}">{{ familyName }}&nbsp;</a></li>
+                <li><a href="#/products/list/category?classId={{ classId }}&className={{ className }}">{{ className }}&nbsp;</a></li>
+                <li><a href="#/products/list/category?commodityId={{ commodityId }}&commodityName={{ commodityName }}">{{ commodityName }}&nbsp;</a></li>
+                <li class="active">{{ itemName }}</li>
               </ol>
             </div>
           </div>
@@ -21,7 +21,7 @@
       </div>
     </section>
     
-    <section class="products section" style="padding: 10px;">
+    <!-- <section class="products section" style="padding: 10px;">
       <div class="container">
       <div class="alert alert-info" ng-show="loading">"Please wait. Loading data..</div>
        <div class="row mb-4" ng-hide="loading">
@@ -51,24 +51,10 @@
 
           
           <div class="row row-cols-1 row-cols-md-3">
-            <!-- <div class="col mb-4" ng-repeat="product in products | filter: { itemName: searchFor } | orderBy: 'itemName'">
-              
-              <div class="card h-100">
-                <img src="{{ product.imageUrl }}" class="card-img-top" alt="<<Product image>>">
-                <div class="card-body">
-                  <h5 class="card-title">{{ product.itemName }}</h5>  <small>{{ product.itemId }}</small>
-                  <p class="card-text">{{ product.description }}</p>
-                </div>
-              </div>
-            </div>
-          
-          </div> -->
-
-          <div class="col-md-4" ng-repeat="(key,value) in products"> <!--| filter: { itemName: searchFor } | orderBy: 'itemName'">-->
+          <div class="col-md-4" ng-repeat="product in products | filter: { itemName: searchFor } | orderBy: 'itemName'">
             <div class="product-item" >
               <div class="product-thumb">
-                <!-- <img class="img-responsive" src="images/shop/products/product-2.jpg" alt="product-img" /> -->
-                <img class="img-responsive" src="{{ value[0].imageUrl }}" alt="<<Product image>>" />
+                <img class="img-responsive" src="{{ product.imageUrl }}" alt="<<Product image>>" />
                 <div class="preview-meta">
                   <ul>
                     <li>
@@ -86,8 +72,8 @@
                             </div>
               </div>
               <div class="product-content">
-                <h4><a href="" ng-click="viewProduct(key,value)">{{ key }}</a></h4>
-                <p class="price">${{ value[0].productPricing.listPrice }}</p>
+                <h4><a href="product-single.html">{{ product.itemName }}({{ product.itemId }})</a></h4>
+                <p class="price">${{ product.productPricing.listPrice }}</p>
               </div>
             </div>
           </div>
@@ -100,7 +86,7 @@
     
       </div>
       </div>
-    </section>
+    </section> -->
 
 <!-- 
     <div style="clear: left"></div>

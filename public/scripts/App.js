@@ -20,9 +20,12 @@ var app=angular
     'SharedModule'
   ]);
 
+  app.constant('_', window._);
+
   app.run(['$rootScope', 'Page', 'Navigation', function($rootScope, Page, Navigation) {
     $rootScope.Page = Page;
     $rootScope.Navigation = Navigation;
+    $rootScope._ = window._;
   }]);
 
   app.config(['$routeProvider', function($routeProvider) {
@@ -30,13 +33,14 @@ var app=angular
         .when('/home', { controller: "HomeCtrl", templateUrl: "HomePage.html" })
         .when('/products/list/:type', { controller: "ProductListCtrl", templateUrl: "ProductList.html" })
         //.when('/products/list/:type/:st', { controller: "ProductListCtrl", templateUrl: "ProductList.html" })
+        .when('/product/view/:itemName', { controller: "ProductViewCtrl", templateUrl: "ProductView.html" })
         .when('/', { redirectTo: "/home" })
         .when('/404_page', { controller: "Ctrl404", templateUrl: "404Page.html" })
         .otherwise({redirectTo: "/404_page" });
   }]);
 
   
-  app.controller('navCtrl',[ '$scope', '$location', 'FileArray', function($scope, $location, FileArray, FileUpload) {
+  app.controller('navCtrl',[ '$scope', '$location', 'ObjectArray', function($scope, $location, ObjectArray, FileUpload) {
     // $scope.search = function(searchTerm) {
     //   $location.path('/products/search/' + searchTerm);
     // }
@@ -69,7 +73,7 @@ var app=angular
       //   alert(error);
       // });
 
-      FileArray.put(file);
+      ObjectArray.put(file);
       $location.path('/products/list/searchByImage');
     
     }

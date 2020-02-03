@@ -206,11 +206,11 @@ productRoutes.get('/ProductList', function(req, res) {
 });
 
 
-productRoutes.get('/ProductList/:pcid', function(req, res) {
+productRoutes.get('/ProductList/:pctype/:pcid', function(req, res) {
     
     let url = "";
-    if (req.params.pcid) {
-        url = serviceUrl + '/Products/' + req.params.pcid;
+    if (req.params.pctype && req.params.pcid) {
+        url = serviceUrl + '/Products/' + req.params.pctype + '/' + req.params.pcid;
     }
     else {
         url = serviceUrl + '/Products';
