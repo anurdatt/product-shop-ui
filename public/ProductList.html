@@ -46,7 +46,7 @@
         <div class="col-lg-9">
           <p class="my-4"><input placeholder="Type to search..." type="text" ng-model="searchFor" size="30"></p>
           <p>
-            There are {{ allProducts ? allProducts.length : 0 }} products available to view:
+            There are {{ products | numkeys }} products available to view:
           </p>
 
           

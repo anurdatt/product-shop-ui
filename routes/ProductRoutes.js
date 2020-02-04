@@ -210,7 +210,8 @@ productRoutes.get('/ProductList/:pctype/:pcid', function(req, res) {
     
     let url = "";
     if (req.params.pctype && req.params.pcid) {
-        url = serviceUrl + '/Products/' + req.params.pctype + '/' + req.params.pcid;
+        let url1 = serviceUrl + '/Products/' + req.params.pctype + '/' + req.params.pcid;
+        url = encodeURI(url1);
     }
     else {
         url = serviceUrl + '/Products';

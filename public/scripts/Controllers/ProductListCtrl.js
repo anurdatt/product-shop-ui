@@ -1,13 +1,14 @@
 (function() {
 function ProductListCtrl($scope, $routeParams, $location, _, Page, Navigation, ObjectArray, ProductListProvider) {
     var pageTitle = '- Product List';
-    
+
     Page.setTitle(pageTitle);
     $scope.loading=true;
 
     $scope.listType = $routeParams.type
     var sterm = $routeParams.st;
     
+    $scope.products = {};
     if ($scope.listType == "all") {
         
         Navigation.setActive('all-products');
@@ -62,7 +63,7 @@ function ProductListCtrl($scope, $routeParams, $location, _, Page, Navigation, O
                 //$scope.products=$scope.allProducts=data;
                 $scope.allProducts=data;
                 $scope.products = _.groupBy($scope.allProducts, 'itemName');
-                console.log('Grouped Products - ',JSON.stringify($scope.products));
+                //console.log('Grouped Products - ',JSON.stringify($scope.products));
                 if ($scope.allProducts.length > 0) {
                     if (!$scope.classId) {
                         let pc = $scope.allProducts[0].productCatalog;
@@ -95,7 +96,7 @@ function ProductListCtrl($scope, $routeParams, $location, _, Page, Navigation, O
                 //$scope.products=$scope.allProducts=data;
                 $scope.allProducts=data;
                 $scope.products = _.groupBy($scope.allProducts, 'itemName');
-                console.log('Grouped Products - ',JSON.stringify($scope.products));
+                //console.log('Grouped Products - ',JSON.stringify($scope.products));
                 if ($scope.allProducts.length > 0) {
                     if (!$scope.familyId) {
                         let pc = $scope.allProducts[0].productCatalog;
@@ -124,7 +125,7 @@ function ProductListCtrl($scope, $routeParams, $location, _, Page, Navigation, O
                 //$scope.products=$scope.allProducts=data;
                 $scope.allProducts=data;
                 $scope.products = _.groupBy($scope.allProducts, 'itemName');
-                console.log('Grouped Products - ',JSON.stringify($scope.products));
+                //console.log('Grouped Products - ',JSON.stringify($scope.products));
                 if ($scope.allProducts.length > 0) {
                     if (!$scope.segmentId) {
                         let pc = $scope.allProducts[0].productCatalog;
@@ -151,7 +152,7 @@ function ProductListCtrl($scope, $routeParams, $location, _, Page, Navigation, O
                 //$scope.products=$scope.allProducts=data;
                 $scope.allProducts=data;
                 $scope.products = _.groupBy($scope.allProducts, 'itemName');
-                console.log('Grouped Products - ',JSON.stringify($scope.products));
+                //console.log('Grouped Products - ',JSON.stringify($scope.products));
                 $scope.activeName = $scope.segmentName;
                 $scope.loading=false;
             } )

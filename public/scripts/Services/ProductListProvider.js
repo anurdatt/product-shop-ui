@@ -47,6 +47,15 @@
             
         };
 
+        this.getProductsByItemName = function (name) {
+            return $http({
+                method: "GET",
+                url: `/api/product/ProductList/name/${name}` 
+                //url: "models/ProductList.json"
+            });
+            
+        };
+
         this.searchProductsByText = function (st) {
             var data = { searchText: st };
             return $http({
