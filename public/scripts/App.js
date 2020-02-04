@@ -73,6 +73,7 @@ var app=angular
       //   alert(error);
       // });
 
+      ObjectArray.clear(); 
       ObjectArray.put(file);
       $location.path('/products/list/searchByImage');
     

@@ -6,10 +6,11 @@ function ProductViewCtrl($scope, $routeParams, Page, ObjectArray) {
     $scope.loading=true;
 
     $scope.itemName = $routeParams.itemName;
+    
     var prodArr = ObjectArray.get();
     if (prodArr.length > 0) {
-        var prod0 = prodArr[0];
-        var pc = prod0.productCatalog;
+        $scope.prod0 = prodArr[0];
+        var pc = $scope.prod0.productCatalog;
         $scope.commodityId = pc.commodityId;
         $scope.commodityName = pc.commodityName;
         $scope.classId = pc.classId;
@@ -19,7 +20,6 @@ function ProductViewCtrl($scope, $routeParams, Page, ObjectArray) {
         $scope.segmentId = pc.segmentId;
         $scope.segmentName = pc.segmentName;
     }
-    ObjectArray.clear(); 
     $scope.loading=false;
     
 }

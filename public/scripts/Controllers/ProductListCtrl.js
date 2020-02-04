@@ -37,7 +37,7 @@ function ProductListCtrl($scope, $routeParams, $location, _, Page, Navigation, O
              //$scope.products=$scope.allProducts=data;
              $scope.allProducts=data;
              $scope.products = _.groupBy($scope.allProducts, 'itemName');
-             console.log('Grouped Products - ',JSON.stringify($scope.products));
+             //console.log('Grouped Products - ',JSON.stringify($scope.products));
             $scope.loading=false;
         } )
         .error( function(error) {
@@ -63,16 +63,24 @@ function ProductListCtrl($scope, $routeParams, $location, _, Page, Navigation, O
                 $scope.allProducts=data;
                 $scope.products = _.groupBy($scope.allProducts, 'itemName');
                 console.log('Grouped Products - ',JSON.stringify($scope.products));
-                if (!$scope.classId) {
-                    let pc = $scope.allProducts[0].productCatalog;
-                    $scope.classId = pc.classId;
-                    $scope.className = pc.className;
-                    $scope.familyId = pc.familyId;
-                    $scope.familyName = pc.familyName;
-                    $scope.segmentId = pc.segmentId;
-                    $scope.segmentName = pc.segmentName;
+                if ($scope.allProducts.length > 0) {
+                    if (!$scope.classId) {
+                        let pc = $scope.allProducts[0].productCatalog;
+                        $scope.classId = pc.classId;
+                        $scope.className = pc.className;
+                        $scope.familyId = pc.familyId;
+                        $scope.familyName = pc.familyName;
+                        $scope.segmentId = pc.segmentId;
+                        $scope.segmentName = pc.segmentName;
+                    }
+                    $scope.activeName = $scope.commodityName;
                 }
-                $scope.activeName = $scope.commodityName;
+                else {
+                    $scope.activeName = $scope.commodityName;
+                    $scope.commodityName = null;  //hack to set section header correct
+                }
+                
+                
                 $scope.loading=false;
             } )
             .error( function(error) {
@@ -88,14 +96,20 @@ function ProductListCtrl($scope, $routeParams, $location, _, Page, Navigation, O
                 $scope.allProducts=data;
                 $scope.products = _.groupBy($scope.allProducts, 'itemName');
                 console.log('Grouped Products - ',JSON.stringify($scope.products));
-                if (!$scope.familyId) {
-                    let pc = $scope.allProducts[0].productCatalog;
-                    $scope.familyId = pc.familyId;
-                    $scope.familyName = pc.familyName;
-                    $scope.segmentId = pc.segmentId;
-                    $scope.segmentName = pc.segmentName;
+                if ($scope.allProducts.length > 0) {
+                    if (!$scope.familyId) {
+                        let pc = $scope.allProducts[0].productCatalog;
+                        $scope.familyId = pc.familyId;
+                        $scope.familyName = pc.familyName;
+                        $scope.segmentId = pc.segmentId;
+                        $scope.segmentName = pc.segmentName;
+                    }
+                    $scope.activeName = $scope.className; 
                 }
-                $scope.activeName = $scope.className;
+                else {
+                    $scope.activeName = $scope.className;
+                    $scope.className = null; //hack to set section header correct
+                }
                 $scope.loading=false;
             } )
             .error( function(error) {
@@ -111,12 +125,18 @@ function ProductListCtrl($scope, $routeParams, $location, _, Page, Navigation, O
                 $scope.allProducts=data;
                 $scope.products = _.groupBy($scope.allProducts, 'itemName');
                 console.log('Grouped Products - ',JSON.stringify($scope.products));
-                if (!$scope.segmentId) {
-                    let pc = $scope.allProducts[0].productCatalog;
-                    $scope.segmentId = pc.segmentId;
-                    $scope.segmentName = pc.segmentName;
+                if ($scope.allProducts.length > 0) {
+                    if (!$scope.segmentId) {
+                        let pc = $scope.allProducts[0].productCatalog;
+                        $scope.segmentId = pc.segmentId;
+                        $scope.segmentName = pc.segmentName;
+                    }
+                    $scope.activeName = $scope.familyName;
                 }
-                $scope.activeName = $scope.familyName;
+                else {
+                    $scope.activeName = $scope.familyName;
+                    $scope.familyName = null; //hack to set section header correct
+                }
                 $scope.loading=false;
             } )
             .error( function(error) {
@@ -152,9 +172,8 @@ function ProductListCtrl($scope, $routeParams, $location, _, Page, Navigation, O
                 //$scope.products=$scope.allProducts=data;
                 $scope.allProducts=data;
                 $scope.products = _.groupBy($scope.allProducts, 'itemName');
-                console.log('Grouped Products - ',JSON.stringify($scope.products));
+                //console.log('Grouped Products - ',JSON.stringify($scope.products));
                 $scope.loading=false;
-                ObjectArray.clear(); 
             }, function(error) {
                 alert("There was an error fetching data, please try again!");
                 console.error("Error: " + JSON.stringify(error));
@@ -169,6 +188,7 @@ function ProductListCtrl($scope, $routeParams, $location, _, Page, Navigation, O
 
     $scope.viewProduct = function(itemName, products) {
         if (!products || !itemName) return;
+        ObjectArray.clear();
         for (let i=0; i<products.length; i++) {
             ObjectArray.put(products[i]);
         }
