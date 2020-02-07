@@ -1,5 +1,5 @@
 (function() {
-function HomeCtrl($scope, Page, Navigation, ProductCatalogProvider) {
+function HomeCtrl($scope, Page, Navigation, _, ProductListProvider) {
     var pageTitle = ' - Home';
     $scope.pc_dd_all="All";
     $scope.pc_selected_segment=$scope.pc_dd_all;
@@ -12,16 +12,30 @@ function HomeCtrl($scope, Page, Navigation, ProductCatalogProvider) {
     Navigation.setActive('home');
     Page.setTitle(pageTitle);
     $scope.loading=true;
-    ProductCatalogProvider.getProductCatalogs()
-    .success(function(data) {
-        //console.log("data : " + JSON.stringify(data));
-        $scope.prodCats=$scope.allProdCats=data;
-        $scope.loading=false;
-    } )
-    .error( function(error) {
-        alert("There was an error fetching data, please try again!");
-        console.error("Error: " + JSON.stringify(error));
-    });
+    // ProductCatalogProvider.getProductCatalogs()
+    // .success(function(data) {
+    //     //console.log("data : " + JSON.stringify(data));
+    //     $scope.prodCats=$scope.allProdCats=data;
+    //     $scope.loading=false;
+    // } )
+    // .error( function(error) {
+    //     alert("There was an error fetching data, please try again!");
+    //     console.error("Error: " + JSON.stringify(error));
+    // });
+
+    ProductListProvider.getAllProducts()
+        .success(function(data) {
+            //console.log("data : " + JSON.stringify(data));
+            //$scope.products=$scope.allProducts=data;
+            $scope.allProducts=data;
+            $scope.prodCats = $scope.allProdCats = _.uniqBy(_.map($scope.allProducts, 'productCatalog'), 'commodityId');
+            //console.log('Grouped Products - ',JSON.stringify($scope.products));
+            $scope.loading=false;
+        } )
+        .error( function(error) {
+            alert("There was an error fetching data, please try again!");
+            console.error("Error: " + JSON.stringify(error));
+        });
 
     // $(document).ready(function(){
     //     $('.dropdown-item').on("click", function(evt) {

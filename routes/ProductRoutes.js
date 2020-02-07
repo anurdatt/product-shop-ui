@@ -87,13 +87,13 @@ productRoutes.get('/ProductCatalog', function(req, res) {
         }
 
         // resultJSON.forEach(function(elem) {
-        //     getObjectData(bucketPC, `${elem.commodityId}.jpg`, function(error, data) {
+        //     getObjectData(bucketPC, `${elem.commodityId}.png`, function(error, data) {
         //         if (error || data == null) {
         //             elem['imageUrl'] = "http://placehold.it/253x182";
                     
         //         }
         //         else {
-        //             elem['imageUrl'] = endpoint + '/' + bucketPC + '/' + elem.commodityId + '.jpg';
+        //             elem['imageUrl'] = endpoint + '/' + bucketPC + '/' + elem.commodityId + '.png';
         //         }
         //         //console.log(JSON.stringify(elem));
 
@@ -104,13 +104,13 @@ productRoutes.get('/ProductCatalog', function(req, res) {
         // for (let i=0; i<resultJSON.length; i++) {
         //     var elem = resultJSON[i];
         //     try {
-        //         var data = await asyncGetObjectData(bucketPC, `${elem.commodityId}.jpg`);
+        //         var data = await asyncGetObjectData(bucketPC, `${elem.commodityId}.png`);
         //         if (!data) {
         //             elem['imageUrl'] = "http://placehold.it/253x182";
         //         }
         //         else {
         //             console.log('File Contents: ' + Buffer.from(data.Body).toString());
-        //             elem['imageUrl'] = endpoint + '/' + bucketPC + '/' + elem.commodityId + '.jpg';
+        //             elem['imageUrl'] = endpoint + '/' + bucketPC + '/' + elem.commodityId + '.png';
         //         }
         //     }
         //     catch(error) {
@@ -121,16 +121,16 @@ productRoutes.get('/ProductCatalog', function(req, res) {
 
         async.forEachOf(resultJSON, function(elem, key, next) {
 
-            elem['imageUrl'] = endpoint + '/' + bucketPC + '/' + elem.commodityId + '.jpg';
+            elem['imageUrl'] = endpoint + '/' + bucketPC + '/' + elem.commodityId + '.png';
 
-            //multiPartUpload(bucketPC, `${elem.commodityId}.jpg`, '253x182.png');
+            //multiPartUpload(bucketPC, `${elem.commodityId}.png`, '253x182.png');
 
-            // getObjectData(bucketPC, `${elem.commodityId}.jpg`, function(error, data) {
+            // getObjectData(bucketPC, `${elem.commodityId}.png`, function(error, data) {
             //     if (error || data == null) {
             //         elem['imageUrl'] = "http://placehold.it/253x182";        
             //     }
             //     else {
-            //         elem['imageUrl'] = endpoint + '/' + bucketPC + '/' + elem.commodityId + '.jpg';
+            //         elem['imageUrl'] = endpoint + '/' + bucketPC + '/' + elem.commodityId + '.png';
             //     }
             //     //console.log(JSON.stringify(elem));
             //     next();
@@ -182,14 +182,15 @@ productRoutes.get('/ProductList', function(req, res) {
 
         async.forEachOf(resultJSON, function(elem, key, next) {
 
-            elem['imageUrl'] = endpoint + '/' + bucketP + '/' + elem.itemId + '.jpg';
-            //multiPartUpload(bucketP, `${elem.itemId}.jpg`, '253x182.png');
-            // getObjectData(bucketP, `${elem.itemId}.jpg`, function(error, data) {
+            elem['imageUrl'] = endpoint + '/' + bucketP + '/' + elem.itemId + '.png';
+            elem.productCatalog['imageUrl'] = endpoint + '/' + bucketPC + '/' + elem.productCatalog.commodityId + '.png';
+            //multiPartUpload(bucketP, `${elem.itemId}.png`, '253x182.png');
+            // getObjectData(bucketP, `${elem.itemId}.png`, function(error, data) {
             //     if (error || data == null) {
             //         elem['imageUrl'] = "http://placehold.it/253x182";        
             //     }
             //     else {
-            //         elem['imageUrl'] = endpoint + '/' + bucketP + '/' + elem.itemId + '.jpg';
+            //         elem['imageUrl'] = endpoint + '/' + bucketP + '/' + elem.itemId + '.png';
             //     }
             //     //console.log(JSON.stringify(elem));
             //     next();
@@ -247,14 +248,14 @@ productRoutes.get('/ProductList/:pctype/:pcid', function(req, res) {
 
         async.forEachOf(resultJSON, function(elem, key, next) {
 
-            elem['imageUrl'] = endpoint + '/' + bucketP + '/' + elem.itemId + '.jpg';
+            elem['imageUrl'] = endpoint + '/' + bucketP + '/' + elem.itemId + '.png';
             
-            // getObjectData(bucketP, `${elem.itemId}.jpg`, function(error, data) {
+            // getObjectData(bucketP, `${elem.itemId}.png`, function(error, data) {
             //     if (error || data == null) {
             //         elem['imageUrl'] = "http://placehold.it/253x182";        
             //     }
             //     else {
-            //         elem['imageUrl'] = endpoint + '/' + bucketP + '/' + elem.itemId + '.jpg';
+            //         elem['imageUrl'] = endpoint + '/' + bucketP + '/' + elem.itemId + '.png';
             //     }
             //     //console.log(JSON.stringify(elem));
             //     next();
@@ -309,14 +310,14 @@ productRoutes.post('/SearchProductsByText', function(req, res) {
 
         async.forEachOf(resultJSON, function(elem, key, next) {
 
-            elem['imageUrl'] = endpoint + '/' + bucketP + '/' + elem.itemId + '.jpg';
+            elem['imageUrl'] = endpoint + '/' + bucketP + '/' + elem.itemId + '.png';
             
-            // getObjectData(bucketP, `${elem.itemId}.jpg`, function(error, data) {
+            // getObjectData(bucketP, `${elem.itemId}.png`, function(error, data) {
             //     if (error || data == null) {
             //         elem['imageUrl'] = "http://placehold.it/253x182";        
             //     }
             //     else {
-            //         elem['imageUrl'] = endpoint + '/' + bucketP + '/' + elem.itemId + '.jpg';
+            //         elem['imageUrl'] = endpoint + '/' + bucketP + '/' + elem.itemId + '.png';
             //     }
             //     //console.log(JSON.stringify(elem));
             //     next();
@@ -380,16 +381,16 @@ productRoutes.post('/SearchProductsByImage', function(req, res) {
             var finalResultJSON = [];
             async.forEachOf(resultJSON, function(elem, key, next) {
 
-                // elem['imageUrl'] = endpoint + '/' + bucketP + '/' + elem.itemId + '.jpg';
+                // elem['imageUrl'] = endpoint + '/' + bucketP + '/' + elem.itemId + '.png';
                 
-                getObjectData(bucketP, `${elem.itemId}.jpg`, async function(error, data) {
+                getObjectData(bucketP, `${elem.itemId}.png`, async function(error, data) {
                     if (error || data == null) {
                         //throw error if reqd.
                         console.error('Error getting Object with Id ' + elem.itemId + ' from COS -',error );
                     }
                     else {
                         console.log('Got Object with Id ' + elem.itemId + ' from COS');
-                        elem['imageUrl'] = endpoint + '/' + bucketP + '/' + elem.itemId + '.jpg';
+                        elem['imageUrl'] = endpoint + '/' + bucketP + '/' + elem.itemId + '.png';
                         
                         // var matchResult = matchImageData(searchImg, Buffer.from(data.Body)); //returns true/false
                         // console.log('matchResult =', matchResult);
@@ -398,7 +399,7 @@ productRoutes.post('/SearchProductsByImage', function(req, res) {
                         //     finalResultJSON.push(elem);
                         // }
 
-                        var matchResult = await matchImageDataAsync(searchImg, Buffer.from(data.Body)); //returns true/false
+                        var matchResult = await matchImageDataAsync(searchImg, Buffer.from(data.Body), elem.itemId); //returns true/false
                         console.log('matchResult =', matchResult);
                         if (matchResult && matchResult != undefined &&
                             matchResult.status == 'PASS' && matchResult.match == true) {
@@ -539,16 +540,13 @@ function getObjectData(bucket, itemKey, cb) {
 }
  */
 
-function matchImageDataAsync(searchBuffer, itemBuffer) {
-    //TODO
-    console.log(searchBuffer);
-    console.log('searchBuffer.length = ' + searchBuffer.length);
-    console.log(itemBuffer);
-    console.log('itemBuffer.length = ' + itemBuffer.length);
+function matchImageDataAsync(searchBuffer, itemBuffer, id) {
+    //console.log(searchBuffer);
+    //console.log('searchBuffer.length = ' + searchBuffer.length);
+    //console.log(itemBuffer);
+    //console.log('itemBuffer.length = ' + itemBuffer.length);
     //return true;
     return new Promise( resolve => {
-
-
         async.waterfall([
             function(next) {
                 jimp.read(searchBuffer)
@@ -601,7 +599,7 @@ function matchImageDataAsync(searchBuffer, itemBuffer) {
                     const pngi=PNG.sync.read(res2);
                     //console.log ('Inside async last cb, ',  pngs.data, pngi.data );
                     diff = new PNG({ width: pngs.width, height: pngs.height})
-                    ret = pixelmatch(pngs.data, pngi.data, diff.data, pngs.width, pngs.height, {threshold:0.1});
+                    ret = pixelmatch(pngs.data, pngi.data, diff.data, pngs.width, pngs.height, {threshold:0.3});
                 }
                 catch(e) {
                     next(e);
@@ -611,7 +609,7 @@ function matchImageDataAsync(searchBuffer, itemBuffer) {
                     next('Failed - no return value from pixelmatch');
                     return;
                 }
-    
+
                 next(null, { ret: ret, diff: diff });
             }
     
@@ -622,9 +620,13 @@ function matchImageDataAsync(searchBuffer, itemBuffer) {
                 resolve({status: "FAIL", match: match});
                 return;
             }
-            // TODO - calculate image diff result
-            //console.log('result.ret = ', result.ret);
-            if (result.ret == 0 ) { match = true; }
+            // calculate image diff result
+            isize = itemBuffer.length;
+            ssize = searchBuffer.length;
+            console.log('item = ', id, ', result.ret = ', result.ret, ', isize =', isize, ', ssize =', ssize);
+            let avgSize = (isize + ssize) / 2;
+            let maxDiff = (2/100)*avgSize;
+            if (result.ret < maxDiff ) { match = true; }
     
             resolve({status: "PASS", match: match});
             
