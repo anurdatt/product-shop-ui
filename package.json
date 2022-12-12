@@ -8,7 +8,7 @@
     "chai": "^3.5.0",
     "chai-http": "^2.0.1",
     "ejs": "^2.4.1",
-    "express": "^4.13.4",
+    "express": "^4.17.3",
     "fs": "0.0.1-security",
     "ibm-cos-sdk": "^1.6.0",
     "jimp": "^0.9.3",
